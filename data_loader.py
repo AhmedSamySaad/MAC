@@ -4,7 +4,11 @@ import cv2
 import random
 import keras.backend as K
 
-def load_path(root_path = './valid/XR_ELBOW', size = 512): #given path is a placeholder data only
+
+#othman edit
+def load_path(root_path = './valid/XR_HUMERUS', size = 512): #given path is a placeholder data only
+
+# def load_path(root_path = './valid/XR_ELBOW', size = 512): #given path is a placeholder data only
 	'''
 	load MURA dataset
 
@@ -20,11 +24,14 @@ def load_path(root_path = './valid/XR_ELBOW', size = 512): #given path is a plac
 				labels+=[1]   	          	 #Last level directory file patient11880\\study1_negative\\image3.png
 			else:
 			    labels+=[0]
-	print (len(Path))
+	print(len(Path))
+	
 	labels = np.asarray(labels)
+	#othman code
+	assert len(Path)== len(labels)
 	return Path, labels
 
-def load_image(Path = './valid/XR_ELBOW', size = 512): #given path is a placeholder data only
+def load_image(Path = './valid/XR_HUMERUS', size = 512): #given path is a placeholder data only
 	Images = []
 	for path in Path:
 		try:
