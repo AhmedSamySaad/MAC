@@ -5,16 +5,18 @@ import datetime
 import random
 import json
 import argparse
-import densenet
 import numpy as np
 import keras.backend as K
 
-from keras.optimizers import Adam
+# from keras.optimizers import Adam
+from tensorflow.keras.optimizers import Adam
 from keras.utils import np_utils
 from keras.models import load_model
 import data_loader
 from keras.models import model_from_json
 
+
+import densenet
 im_size = 320
 
 
@@ -26,15 +28,21 @@ model.load_weights('./save_models/MURA_modle@epochs52.h5')
 X_valid_path, Y_valid = data_loader.load_path(root_path = './valid/XR_HUMERUS', size = im_size)
 X_valid = data_loader.load_image(X_valid_path,im_size)
 y1 = model.predict(X_valid, batch_size=None, verbose=0, steps=None)
-
+prediction= [] #othman edit
 j = len(y1)
 
 for i in range (0, j):
 	if y1[i]>0.5 :
-		print(X_valid_path[i],":\t","Positive\t", y1[i])
+		# print(X_valid_path[i],":\t","Positive\t", y1[i])
+		prediction.append(1) #othman edit
 	else:
-		print(X_valid_path[i],":\t","Negative\t", y1[i])
+		# print(X_valid_path[i],":\t","Negative\t", y1[i])
+		prediction.append(0) #othman edit
 
 
+# print(len(Y_valid)== len(prediction)) #othman edit
 
+Y_valid = np.array(Y_valid)
+prediction= np.array(prediction)
+print(("Accuracy: ", Y_valid==prediction).sum()/len(Y_valid))
 

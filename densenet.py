@@ -4,7 +4,8 @@ from keras.layers.convolutional import Conv2D
 from keras.layers.pooling import AveragePooling2D
 from keras.layers.pooling import GlobalAveragePooling2D
 from keras.layers import Input, Concatenate
-from keras.layers.normalization import BatchNormalization
+# from keras.layers.normalization import BatchNormalization
+from tensorflow.keras.layers import BatchNormalization
 from keras.regularizers import l2
 import keras.backend as K
 
@@ -128,10 +129,11 @@ def DenseNet(nb_classes, img_dim, depth, nb_dense_block, growth_rate, nb_filter,
     :return type: keras model
 
     """
-    
-    if K.image_dim_ordering() == "th":
+    if K.image_data_format() == "channels_first": #othman edit
+    # if K.image_dim_ordering() == "th":
         concat_axis = 1
-    elif K.image_dim_ordering() == "tf":
+    elif K.image_data_format() == "channels_last": #othman edit
+    # elif K.image_dim_ordering() == "tf":
         concat_axis = -1
 
     model_input = Input(shape=img_dim)
