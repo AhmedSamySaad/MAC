@@ -53,9 +53,9 @@ def run_MURA(batch_size, nb_epoch, depth, nb_dense_block, nb_filter, growth_rate
 
     model = densenet.DenseNet(nb_classes, img_dim, depth, nb_dense_block, growth_rate, nb_filter, dropout_rate=dropout_rate, weight_decay=weight_decay)
     # Model output
-    print('test1')
+    # print('test1')
     model.summary()
-    print('test2')
+    # print('test2')
     # Build optimizer
     opt = Adam(lr=learning_rate, beta_1=0.9, beta_2=0.999, epsilon=1e-08)
 
