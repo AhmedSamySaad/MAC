@@ -18,13 +18,14 @@ def load_path(root_path = './valid/XR_HUMERUS', size = 512): #given path is a pl
 	labels = []
 	for root,dirs,files in os.walk(root_path): #Read all pictures, os.walk Return to iterator genertor Traverse all files
 		for name in files:
+			if name[0] == '.': continue
 			path_1 = os.path.join(root,name)
 			Path.append(path_1)
 			if root.split('_')[-1]=='positive':	 #positive Label is 1，otherwise 0；
 				labels+=[1]   	          	 #Last level directory file patient11880\\study1_negative\\image3.png
 			else:
 			    labels+=[0]
-	print(len(Path))
+	# print(len(Path))
 	
 	labels = np.asarray(labels)
 	#othman code
@@ -41,7 +42,7 @@ def load_image(Path = './valid/XR_HUMERUS', size = 512): #given path is a placeh
 			Images.append(image)
 
 		except Exception as e:
-			print(str(e))
+			print(str(e),path)
 
 	Images = np.asarray(Images).astype('float32')
 

@@ -8,7 +8,8 @@ import argparse
 import numpy as np
 import keras.backend as K
 # from sklearn.metrics import confusion_matrix
-# from sklearn.metrics import f1_score
+import tensorflow as tf
+from sklearn.metrics import f1_score
 # from keras.optimizers import Adam
 from tensorflow.keras.optimizers import Adam
 from keras.utils import np_utils
@@ -28,6 +29,7 @@ model.load_weights('./save_models/MURA_modle@epochs40.h5') #model_52_epochs
 # model.load_weights('./save_models/best_MURA_modle@epochs14.h5')
 X_valid_path, Y_valid = data_loader.load_path(root_path = './valid/XR_HUMERUS', size = im_size)
 X_valid = data_loader.load_image(X_valid_path,im_size)
+
 y1 = model.predict(X_valid, batch_size=None, verbose=0, steps=None)
 prediction= [] #othman edit
 j = len(y1)
@@ -47,5 +49,5 @@ Y_valid = np.array(Y_valid)
 prediction= np.array(prediction)
 print("Accuracy: ",(Y_valid==prediction).sum()/len(Y_valid))
 
-print(f"confusion_matrix: {confusion_matrix(Y_valid, prediction)}")
+print(f"confusion_matrix: {tf.math.confusion_matrix(Y_valid, prediction)}")
 print(f"f_1 score: {f1_score(Y_valid, prediction)}")
