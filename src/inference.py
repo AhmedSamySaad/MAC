@@ -14,7 +14,7 @@ class Inference:
 
     def predict(self):
         if self.bone_type == "XR_ELBOW":
-            self.model.load_weights('./best_models/Best_MURA_model_XR_ELBOW@epochs40.h5')
+            self.model.load_weights('./best_models/Best_MURA_model_XR_ELBOW@epochs52.h5')
         elif self.bone_type == "XR_FINGER":
             self.model.load_weights('./best_models/Best_MURA_model_XR_FINGER@epochs40.h5')
         elif self.bone_type == "XR_FOREARM":
@@ -29,7 +29,8 @@ class Inference:
             self.model.load_weights('./best_models/Best_MURA_model_XR_WRIST@epochs40.h5')
 
         prediction = self.model.predict(self.preprocessing(320), batch_size=None, verbose=0, steps=None)
-        if prediction > 0.5:
+
+        if prediction[0][0] > 0.5:
             return "Abnormal"
         else:
             return "Normal"
@@ -41,7 +42,7 @@ class Inference:
         img = cv2.imdecode(npimg, cv2.IMREAD_GRAYSCALE)
         img = cv2.resize(img,(size,size))
         img = data_loader.randome_rotation_flip(img,size)
-        img = np.asarray(img).astype('float32')
+        img = np.asarray([img]).astype('float32')
         mean = np.mean(img)			#normalization
         std = np.std(img)
         img = (img - mean) / std
@@ -50,5 +51,3 @@ class Inference:
         if K.image_data_format() == "channels_last":
             img = np.expand_dims(img,axis=3)             #Extended dimension 3(usebackend tensorflow:aixs=3; theano:axixs=1) 
         return img
-    # def get_label(self):
-    #     pass

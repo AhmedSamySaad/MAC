@@ -27,7 +27,7 @@ model = densenet.DenseNet(nb_classes=1, img_dim=(320,320,1), depth=22, nb_dense_
 # model.load_weights('./save_models/MURA_modle@epochs10.h5') #model_10_epochs
 model.load_weights('../models/XR_HUMERUS/MURA_modle@epochs40.h5') #model_52_epochs
 # model.load_weights('./save_models/best_MURA_modle@epochs14.h5')
-X_valid_path, Y_valid = data_loader.load_path(root_path = './valid/XR_HUMERUS', size = im_size)
+X_valid_path, Y_valid = data_loader.load_path(root_path = '../valid/XR_HUMERUS', size = im_size)
 X_valid = data_loader.load_image(X_valid_path,im_size)
 
 y1 = model.predict(X_valid, batch_size=None, verbose=0, steps=None)

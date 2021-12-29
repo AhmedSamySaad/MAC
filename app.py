@@ -1,5 +1,5 @@
 import random
-
+from base64 import b64encode
 from flask import Flask, render_template, request, jsonify
 from src.inference import Inference
 app = Flask(__name__, static_folder='static/assets', template_folder='templates')
@@ -26,7 +26,8 @@ def upload_with_bone_type(): # This will handel the bones with bone type
         image_inference=Inference(image.get('image'),image.get('type'))
         label= image_inference.predict()
         print(label)
-        list_of_results.append({'image':image.get('image'),'result':label})
+        #Need to check how to serialize image in json object
+        list_of_results.append({'image':b64encode(image.get('image').read()),'result':label})
     response = jsonify({
         'success': True,
         'html_value': True,
