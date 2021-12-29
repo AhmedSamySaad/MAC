@@ -6,8 +6,8 @@ import keras.backend as K
 
 
 class Inference:
-    def __init__(self,image,bone_type):
-        self.image=image
+    def __init__(self,image_path,bone_type):
+        self.image_path=image_path
         self.bone_type=bone_type
         self.model = densenet.DenseNet(nb_classes=1, img_dim=(320,320,1), depth=22, nb_dense_block=4, growth_rate=12, nb_filter=16, dropout_rate=0.2, weight_decay=1E-4)
 
@@ -37,9 +37,10 @@ class Inference:
     
     def preprocessing(self,size):
         #convert string data to numpy array
-        npimg = np.fromstring(self.image.read(), np.uint8)
+        # npimg = np.fromstring(self.image, np.uint8)
         # convert numpy array to image
-        img = cv2.imdecode(npimg, cv2.IMREAD_GRAYSCALE)
+        # img = cv2.imdecode(npimg, cv2.IMREAD_GRAYSCALE)
+        img = cv2.imread(self.image_path,cv2.IMREAD_GRAYSCALE)
         img = cv2.resize(img,(size,size))
         img = data_loader.randome_rotation_flip(img,size)
         img = np.asarray([img]).astype('float32')
