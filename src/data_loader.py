@@ -37,9 +37,7 @@ def load_image(Path = './valid/XR_HUMERUS', size = 512): #given path is a placeh
 	for path in Path:
 		try:
 			image = cv2.imread(path,cv2.IMREAD_GRAYSCALE)
-			print(image.shape)
 			image = cv2.resize(image,(size,size))
-			print(image.shape)
 			image = randome_rotation_flip(image,size)
 			Images.append(image)
 
