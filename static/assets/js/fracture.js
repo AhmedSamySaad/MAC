@@ -66,7 +66,6 @@ window.addEventListener("load", function () {
             type: "post",
             enctype: 'multipart/form-data',
             data: formData,
-            // dataType: 'JSON',
             processData: false,
             contentType: false,
         });
