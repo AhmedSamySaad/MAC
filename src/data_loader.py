@@ -24,8 +24,8 @@ def load_path(root_path = './valid/XR_HUMERUS', size = 512): #given path is a pl
 			if root.split('_')[-1]=='positive':	 #positive Label is 1，otherwise 0；
 				labels+=[1]   	          	 #Last level directory file patient11880\\study1_negative\\image3.png
 			else:
-			    labels+=[0]
-	# print(len(Path))
+				labels+=[0]
+
 	
 	labels = np.asarray(labels)
 	#othman code
@@ -37,9 +37,7 @@ def load_image(Path = './valid/XR_HUMERUS', size = 512): #given path is a placeh
 	for path in Path:
 		try:
 			image = cv2.imread(path,cv2.IMREAD_GRAYSCALE)
-			print(image.shape)
 			image = cv2.resize(image,(size,size))
-			print(image.shape)
 			image = randome_rotation_flip(image,size)
 			Images.append(image)
 
