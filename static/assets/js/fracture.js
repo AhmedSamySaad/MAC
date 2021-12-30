@@ -83,7 +83,7 @@ window.addEventListener("load", function () {
     });
     function createResultHTMLString(json_response)
     {
-        var result_html = "<tr><th style=\"font-size: 1.5rem\">Image</th><th style=\"font-size: 1.5rem\">Classification</th></tr>";
+        var result_html = "<tr><th style=\"font-size: 1.5rem\">X-Ray Image</th><th style=\"font-size: 1.5rem\">Classification</th></tr>";
         json_response.forEach(function(image){
             result_html += "<tr>"
             result_html += "<td>" +"<img src=\"" + image.image_path + "\" width=\"300\" height=\"300\">" + "</td>";
