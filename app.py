@@ -1,6 +1,6 @@
-import os, shutil
+import os, shutil, glob
 from base64 import b64encode
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_from_directory
 from werkzeug.utils import secure_filename
 from src.inference import Inference
 app = Flask(__name__, static_folder='static/assets', template_folder='templates')
@@ -28,8 +28,7 @@ def upload_with_bone_type(): # This will handel the bones with bone type
         image_path = save_tmp_img(image)
         image_inference=Inference(image_path,image.get('type'))
         label= image_inference.predict()
-        print(label)
-        list_of_results.append({'image':image_path,'result':label})
+        list_of_results.append({'image_path':image_path,'result':label})
     response = jsonify({
         'success': True,
         'html_value': True,
@@ -40,10 +39,10 @@ def upload_with_bone_type(): # This will handel the bones with bone type
 
 def save_tmp_img(image):
     extension = secure_filename(image.get('image').filename).split('.')[1]
-    if not os.listdir('./tmp'):
+    if not listdir_nohidden('./tmp'):
         filename="1."+ extension
     else:
-        filename = str(len(os.listdir('./tmp'))+1) + "." + extension
+        filename = str(len(listdir_nohidden('./tmp'))+1) + "." + extension
     # filename = secure_filename(image.get('image').filename) # save file 
     filepath = os.path.join('./tmp', filename)
     image.get('image').save(filepath)
@@ -51,8 +50,7 @@ def save_tmp_img(image):
 
 def empty_tmp_directory():
     folder = './tmp'
-    for filename in os.listdir(folder):
-        file_path = os.path.join(folder, filename)
+    for file_path in listdir_nohidden(folder):
         try:
             if os.path.isfile(file_path) or os.path.islink(file_path):
                 os.unlink(file_path)
@@ -60,6 +58,9 @@ def empty_tmp_directory():
                 shutil.rmtree(file_path)
         except Exception as e:
             print('Failed to delete %s. Reason: %s' % (file_path, e))
+
+def listdir_nohidden(path):
+    return glob.glob(os.path.join(path, '*'))
 
 @app.route('/upload/without/type', methods=['POST'])
 def upload_without_bone_type(): # This will handel the bones without bone type
@@ -70,6 +71,10 @@ def upload_without_bone_type(): # This will handel the bones without bone type
     })
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
+
+@app.route('/tmp/<path:filename>')
+def send_file(filename):
+    return send_from_directory("./tmp", filename, as_attachment=True)
 
 
 if __name__ == '__main__':

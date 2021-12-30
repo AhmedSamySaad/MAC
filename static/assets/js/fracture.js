@@ -66,11 +66,13 @@ window.addEventListener("load", function () {
             type: "post",
             enctype: 'multipart/form-data',
             data: formData,
+            // dataType: 'JSON',
             processData: false,
             contentType: false,
         });
         request.done(function (response, textStatus, jqXHR) {
             $.unblockUI();
+            $("#results").html(createResultHTMLString(response.list_results));
              // document.getElementById('ImageWithForm').style.display = "none";
             console.log("Hooray, it worked!");
         });
@@ -79,7 +81,17 @@ window.addEventListener("load", function () {
             $.unblockUI();
         });
     });
-
+    function createResultHTMLString(json_response)
+    {
+        var result_html = "<tr><th style=\"font-size: 1.5rem\">Image</th><th style=\"font-size: 1.5rem\">Classification</th></tr>";
+        json_response.forEach(function(image){
+            result_html += "<tr>"
+            result_html += "<td>" +"<img src=\"" + image.image_path + "\" width=\"300\" height=\"300\">" + "</td>";
+            result_html += "<td style=\"font-size: 1.5rem\">" + image.result + "</td>";
+            result_html += "</tr>"
+        })
+        return result_html
+    }
     document.getElementById('upload_2').addEventListener("click", function () {
         $.blockUI({message: '<h1><img src="assets/img/busy.gif" /> Analyzing ;)</h1>'});
         var form = $('#ImageWithoutForm')[0];
