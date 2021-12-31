@@ -26,7 +26,7 @@ def upload_with_bone_type(): # This will handel the bones with bone type
     list_of_results=[]
     for image in list_of_images:
         image_path = save_tmp_img(image)
-        image_inference=Inference(image_path,image.get('type'),'inceptionv3')
+        image_inference=Inference(image_path,image.get('type'),'densenet')
         label= image_inference.predict()
         list_of_results.append({'image_path':image_path,'result':label})
     response = jsonify({

@@ -22,17 +22,17 @@ class Inference:
             if self.bone_type == "XR_ELBOW":
                 self.model.load_weights('./best_models/densenet/Best_MURA_model_XR_ELBOW@epochs52.h5')
             elif self.bone_type == "XR_FINGER":
-                self.model.load_weights('./best_models/densenet/Best_MURA_model_XR_FINGER@epochs40.h5')
+                self.model.load_weights('./best_models/densenet/Best_MURA_model_XR_FINGER@epochs35.h5')
             elif self.bone_type == "XR_FOREARM":
-                self.model.load_weights('./best_models/densenet/Best_MURA_model_XR_FOREARMepochs40.h5')
+                self.model.load_weights('./best_models/densenet/Best_MURA_model_XR_FOREARM@epochs46.h5')
             elif self.bone_type == "XR_HAND":
-                self.model.load_weights('./best_models/densenet/Best_MURA_model_XR_HAND@epochs40.h5')
+                self.model.load_weights('./best_models/densenet/Best_MURA_model_XR_HAND@epochs49.h5')
             elif self.bone_type == "XR_HUMERUS":
                 self.model.load_weights('./best_models/densenet/Best_MURA_model_XR_HUMERUS@epochs40.h5')
             elif self.bone_type == "XR_SHOULDER":
-                self.model.load_weights('./best_models/densenet/Best_MURA_model_XR_SHOULDER@epochs40.h5')
+                self.model.load_weights('./best_models/densenet/Best_MURA_model_XR_SHOULDER@epochs51.h5')
             else: #XR_WRIST
-                self.model.load_weights('./best_models/densenet/Best_MURA_model_XR_WRIST@epochs40.h5')
+                self.model.load_weights('./best_models/densenet/Best_MURA_model_XR_WRIST@epochs35.h5')
 
             prediction = self.model.predict(self.preprocessing(320), batch_size=None, verbose=0, steps=None)
 
@@ -47,15 +47,15 @@ class Inference:
             elif self.bone_type == "XR_FINGER":
                 self.model = keras.models.load_model('./best_models/inceptionv3/Best_MURA_model_XR_FINGER@epochs40.h5')
             elif self.bone_type == "XR_FOREARM":
-                self.model = keras.models.load_model('./best_models/inceptionv3/Best_MURA_model_XR_FOREARMepochs40.h5')
+                self.model = keras.models.load_model('./best_models/inceptionv3/Best_MURA_model_XR_FOREARM@epochs40.h5')
             elif self.bone_type == "XR_HAND":
                 self.model = keras.models.load_model('./best_models/inceptionv3/Best_MURA_model_XR_HAND@epochs40.h5')
             elif self.bone_type == "XR_HUMERUS":
                 self.model = keras.models.load_model('./best_models/inceptionv3/Best_MURA_model_XR_HUMERUS@epochs40.h5')
             elif self.bone_type == "XR_SHOULDER":
-                self.model = keras.models.load_model('./best_models/inceptionv3/Best_MURA_model_XR_SHOULDER@epochs40.h5')
+                self.model = keras.models.load_model('./best_models/inceptionv3/Best_MURA_model_XR_SHOULDER@epochs51.h5')
             else: #XR_WRIST
-                self.model = keras.models.load_model('./best_models/inceptionv3/Best_MURA_model_XR_WRIST@epochs40.h5')
+                self.model = keras.models.load_model('./best_models/inceptionv3/Best_MURA_model_XR_WRIST@epochs35.h5')
             
 
             y_pred=  self.model.predict(self.preprocessing())
