@@ -1,3 +1,4 @@
 MURA-v1.1/
 .DS_Store
 __pycache__/
+*.key
