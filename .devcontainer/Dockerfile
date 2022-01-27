@@ -20,14 +20,13 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 # These commands install the cv2 dependencies that are normally present on the local machine
 RUN apt-get update
-RUN apt-get install ffmpeg libsm6 libxext6  -y
+RUN apt-get install git ffmpeg libsm6 libxext6  -y
 
 # Install pip requirements
 COPY requirements.txt .
 RUN python -m pip install -r requirements.txt
 # The following command for forcing the reinstallation of tensorflow to work without AVX instruction set so that arm64 emulation can work correctly
-# RUN python -m pip install --force-reinstall https://tf.novaal.de/barcelona/tensorflow-2.7.0-cp38-cp38-linux_x86_64.whl
-# RUN python -m pip install -r requirements-emulated-amd64onarm64.txt
+RUN python -m pip install --force-reinstall https://tf.novaal.de/barcelona/tensorflow-2.7.0-cp38-cp38-linux_x86_64.whl
 
 WORKDIR /app
 COPY . /app
